@@ -13,10 +13,10 @@ class EventStreamingTest(BaseTest):
     def setUp(self):
         """Set up test environment."""
         super().setUp()
-        self.default_region = "cn-north-4"
+        # self.default_region = "cn-north-4"
         # # Override default region in environment variables
-        os.environ['HUAWEI_DEFAULT_REGION'] = self.default_region
-        os.environ['HUAWEICLOUD_SDK_REGION_EG_AP_SOUTHEAST_1'] = "https://eg.sa-brazil-1.myhuaweicloud.com"
+        # os.environ['HUAWEI_DEFAULT_REGION'] = self.default_region
+        os.environ['HUAWEICLOUD_SDK_REGION_EG_AP_SOUTHEAST_1'] = "https://eg.ap-southeast-1.myhuaweicloud.com"
 
     def test_eg_subscriptions_query(self):
         """Test basic query functionality for event streaming."""
