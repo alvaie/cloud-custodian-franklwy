@@ -49,7 +49,7 @@ class EventStreamingTest(BaseTest):
             p = self.load_policy({
                 'name': 'subscriptions-tag-count-match',
                 'resource': 'huaweicloud.eg-subscription',
-                'filters': [{'type': 'tag-count', 'count': expected_tag_count, 'op':'eq'}]
+                'filters': [{'type': 'tag-count', 'count': expected_tag_count, 'op': 'eq'}]
             }, session_factory=factory)
             resources = p.run()
             # Verify VCR: tag_count should contain one resource with exactly 2 tags
