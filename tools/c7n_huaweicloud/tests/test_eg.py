@@ -16,8 +16,6 @@ class EventStreamingTest(BaseTest):
         self.default_region = "sa-brazil-1"
         # Override default region in environment variables
         os.environ['HUAWEI_DEFAULT_REGION'] = self.default_region
-        os.environ['HUAWEI_ACCESS_KEY_ID'] = "HPUAMHKFNPGPALIBWEDJ"
-        os.environ['HUAWEI_SECRET_ACCESS_KEY'] = "JJB9e1mRBdYLnrgj9dO9M5901wsxEYHydAVTDrHU"
         os.environ['HUAWEI_PROJECT_ID'] = "0f3e90028580f40e2f65c0061bc5a600"
         os.environ['HUAWEICLOUD_SDK_REGION_EG_SA_BRAZIL_1'] = "https://eg.sa-brazil-1.myhuaweicloud.com"
 
