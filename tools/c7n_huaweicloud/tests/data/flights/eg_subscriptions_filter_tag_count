@@ -11,7 +11,7 @@ interactions:
       Content-Type:
       - application/json
       Host:
-      - eg.sa-brazil-1.myhuaweicloud.com
+      - eg.cn-north-4.myhuaweicloud.com
       User-Agent:
       - huaweicloud-usdk-python/3.0
       X-Project-Id:
@@ -19,7 +19,7 @@ interactions:
       X-Sdk-Date:
       - 20250514T063435Z
     method: GET
-    uri: https://eg.sa-brazil-1.myhuaweicloud.com/v1/0f3e90028580f40e2f65c0061bc5a600/subscriptions?limit=100&offset=0
+    uri: https://eg.cn-north-4.myhuaweicloud.com/v1/ap-southeat-1/subscriptions?limit=100&offset=0
   response:
     body:
       string: '{"size":1,"total":1,"items":[{"id":"63cfd150-65fd-4180-ba32-e9710100d100","created_time":"2025-05-13T10:22:02Z","updated_time":"2025-05-13T10:22:02Z","name":"subscription-ppki","description":"","type":"EVENT","status":"ENABLED","channel_id":"65359a7e-3c46-431d-9629-f2a56a2a0380","channel_name":"test","sources":[{"id":"f2c3c223-dab2-4171-b864-c0ad17268257","created_time":"2025-05-13T10:22:02Z","updated_time":"2025-05-13T10:22:02Z","name":"test","provider_type":"CUSTOM","detail":{},"filter":{"source":[{"op":"StringIn","values":["test"]}]}}],"targets":[{"id":"d1500502-7781-4e39-b1e9-65a5aab661e1","created_time":"2025-05-13T10:22:02Z","updated_time":"2025-05-13T10:22:02Z","name":"HTTPS","provider_type":"CUSTOM","connection_id":"2f1b384d-b643-496f-b9ed-450f741984f3","detail":{"url":"http://1.1.1.1"},"transform":{"type":"ORIGINAL","value":""},"thread_num":20,"retry_times":16}],"used":[],"eps_id":"0"}]}'
@@ -56,4 +56,60 @@ interactions:
     status:
       code: 200
       message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - eg.cn-north-4.myhuaweicloud.com
+      User-Agent:
+      - huaweicloud-usdk-python/3.0
+      X-Project-Id:
+      - ap-southeat-1
+      X-Sdk-Date:
+      - 20250514T065835Z
+    method: GET
+    uri: https://eg.cn-north-4.myhuaweicloud.com/v1/ap-southeat-1/subscriptions?limit=100&offset=0
+  response:
+    body:
+      string: '{"error_msg":"Incorrect IAM authentication information: ak access_key_id
+        not exist","error_code":"APIGW.0301","request_id":"4172aaa3f90c51209552a38bacc1e603"}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 14 May 2025 06:58:36 GMT
+      Server:
+      - CloudWAF
+      Set-Cookie:
+      - HWWAFSESID=5c1d67312da7b2d3d7; path=/
+      - HWWAFSESTIME=1747205916474; path=/
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 4172aaa3f90c51209552a38bacc1e603
+      X-XSS-Protection:
+      - 1; mode=block;
+    status:
+      code: 401
+      message: Unauthorized
 version: 1
