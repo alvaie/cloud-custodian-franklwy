@@ -45,6 +45,8 @@ ResourceMap = {
     "huaweicloud.ram-shared-principals": "c7n_huaweicloud.resources.ram.RAMSharedPrincipals",
     "huaweicloud.antiddos-eip": "c7n_huaweicloud.resources.antiddos.Eip",
     "huaweicloud.kafka": "c7n_huaweicloud.resources.kafka.Kafka",
+    "huaweicloud.swr": "c7n_huaweicloud.resources.swr.Swr",
+    "huaweicloud.swr-image": "c7n_huaweicloud.resources.swr.SwrImage",
     "huaweicloud.eip": "c7n_huaweicloud.resources.eip.EIP",
     "huaweicloud.certificate": "c7n_huaweicloud.resources.scm.Certificate",
     "huaweicloud.dc": "c7n_huaweicloud.resources.dc.DC",
