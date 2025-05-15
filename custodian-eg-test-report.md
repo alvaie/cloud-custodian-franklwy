@@ -216,3 +216,5 @@ custodian run -v --cache-period=0 --output-dir=. custodian.yml
 2. 标签操作成功应用于目标资源
 ![img.png](img.png)
 
+![img_1.png](img_1.png)
+
