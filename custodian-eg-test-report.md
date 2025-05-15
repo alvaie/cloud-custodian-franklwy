@@ -26,7 +26,7 @@ policies:
 
 #### 执行命令
 ```bash
-custodian run -v --output-dir=. custodian.yml
+custodian run -v --cache-period=0 --output-dir=. custodian.yml
 ```
 
 #### 测试结果
@@ -57,7 +57,7 @@ policies:
 ```
 #### 执行命令
 ```bash
-custodian run --output-dir=. custodian.yml
+custodian run -v --cache-period=0 --output-dir=. custodian.yml
 ```
 
 #### 测试结果
@@ -93,7 +93,7 @@ policies:
 
 #### 执行过程
 ```bash
-custodian run --output-dir=. custodian.yml
+custodian run -v --cache-period=0 --output-dir=. custodian.yml
 ```
 
 #### 测试输出
@@ -133,7 +133,7 @@ policies:
 
 #### 执行命令
 ```bash
-custodian run -v --output-dir=. custodian.yml
+custodian run -v --cache-period=0 --output-dir=. custodian.yml
 ```
 
 #### 测试结果
@@ -171,31 +171,36 @@ graph TD
 #### 测试策略
 ```yaml
 policies:
-  - name: keep-latest-subscriptions
+  - name: event-subscription-tags-autoadd
     resource: huaweicloud.eg-subscription
     filters:
-      - type: reduce
-        group-by: "sources[].provider_type || 'none'"
-        sort-by: updated_time
-        order: desc
-        limit: 2
+      - type: tag-count
+        count: 0
+        op: eq
+    actions:
+      - type: tag
+        key: RequiredTag
+        value: RequiredValue
+
 ```
 
 #### 执行命令
 ```bash
-custodian run -v --output-dir=. custodian.yml
+custodian run -v --cache-period=0 --output-dir=. custodian.yml
 ```
 
 #### 测试结果
 ```log
-(venv) PS C:\code\cloud-custodian-franklwy-fork> custodian run -v --output-dir=. custodian.yml              
-2025-05-15 16:58:41,119: custodian.commands:DEBUG Loaded file custodian.yml. Contains 1 policies
-2025-05-15 16:58:41,119: custodian.output:DEBUG Storing output with <LogFile file://.\keep-latest-subscriptions\custodian-run.log>
-2025-05-15 16:58:41,119: custodian.policy:DEBUG Running policy:keep-latest-subscriptions resource:huaweicloud.eg-subscription region:default c7n:0.9.43
-2025-05-15 16:58:41,119: custodian.cache:DEBUG expired 1 stale cache entries
-2025-05-15 16:58:46,793: custodian.resources.subscription:DEBUG Filtered from 1 to 1 subscription
-2025-05-15 16:58:46,793: custodian.policy:INFO policy:keep-latest-subscriptions resource:huaweicloud.eg-subscription region: count:1 time:5.67
-2025-05-15 16:58:46,793: custodian.output:DEBUG metric:ResourceCount Count:1 policy:keep-latest-subscriptions restype:huaweicloud.eg-subscription scope:policy
+(venv) PS C:\code\cloud-custodian-franklwy-fork> custodian run -v --cache-period=0 --output-dir=. custodian.yml
+2025-05-15 19:48:10,415: custodian.cache:DEBUG Disabling cache
+2025-05-15 19:48:10,415: custodian.commands:DEBUG Loaded file custodian.yml. Contains 1 policies
+2025-05-15 19:48:10,415: custodian.output:DEBUG Storing output with <LogFile file://.\event-subscription-tags-autoadd\custodian-run.log>
+2025-05-15 19:48:10,415: custodian.policy:DEBUG Running policy:event-subscription-tags-autoadd resource:huaweicloud.eg-subscription region:default c7n:0.9.43
+2025-05-15 19:48:15,972: custodian.resources.subscription:DEBUG Filtered from 1 to 1 subscription
+2025-05-15 19:48:15,972: custodian.policy:INFO policy:event-subscription-tags-autoadd resource:huaweicloud.eg-subscription region: count:1 time:5.56
+2025-05-15 19:48:19,094: custodian.huaweicloud.actions.tms.CreateResourceTagAction:INFO Successfully tagged 1 resources with 1 tags
+2025-05-15 19:48:19,094: custodian.policy:INFO policy:event-subscription-tags-autoadd action:createresourcetagaction resources:1 execution_time:3.12
+2025-05-15 19:48:19,110: custodian.output:DEBUG metric:ResourceCount Count:1 policy:event-subscription-tags-autoadd restype:huaweicloud.eg-subscription scope:policy
 ```
 
 ### 结果验证
