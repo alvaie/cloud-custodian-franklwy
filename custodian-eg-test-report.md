@@ -211,15 +211,8 @@ custodian run -v --cache-period=0 --output-dir=. custodian.yml
 ```
 
 ### 结果验证
-
-#### 过滤器工作流程
-```mermaid
-graph TD
-    A[原始资源集合] --> B{按sources.provider_type分组}
-    B -->|CUSTOM组| C[按updated_time降序排序]
-    B -->|none组| D[空组处理]
-    C --> E[每组保留最新2个]
-    E --> F[最终匹配资源]
-```
-
+✅ **核心功能验证通过**：
+1. 标签数量过滤器准确识别无标签资源
+2. 标签操作成功应用于目标资源
+![img.png](img.png)
 
