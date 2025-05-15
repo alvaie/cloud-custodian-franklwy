@@ -26,7 +26,7 @@ policies:
 
 #### 执行命令
 ```bash
-custodian run --output-dir=./report custodian_tag_count.yml
+custodian run -v --output-dir=. custodian.yml
 ```
 
 #### 测试结果
