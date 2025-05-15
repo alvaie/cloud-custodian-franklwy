@@ -39,7 +39,9 @@ custodian run -v --cache-period=0 --output-dir=. custodian.yml
 ✅ 验证通过：
 
 通过 count: 0 准确识别到1个未标记资源
+
 op: eq 运算符实现精确数量匹配
+
 执行耗时 0.00 秒，验证过滤器高效性
 
 ### 测试点 2: 资源属性过滤（value）
@@ -70,8 +72,11 @@ custodian run -v --cache-period=0 --output-dir=. custodian.yml
 ✅ 验证通过：
 
 成功过滤出 1 个状态为 ENABLED 的订阅资源
+
 key: status 参数准确匹配资源属性字段
+
 op: eq 运算符实现精确值匹配
+
 执行耗时 5.62 秒（注：时间波动属正常现象）
 
 ### 测试点 3: 自定义事件源过滤（list-item）
@@ -113,7 +118,9 @@ custodian run -v --cache-period=0 --output-dir=. custodian.yml
 #### 结果分析
 ✅ **功能验证成功**：
 - 精确匹配包含 `provider_type=CUSTOM` 的事件源
+- 
 - `list-item` 过滤器正确遍历资源嵌套数组
+- 
 - 实现零耗时过滤（`0.00s` 执行时间）
 
 ### 测试点4：资源分组归约（reduce）
