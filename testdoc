@@ -1,0 +1,58 @@
+测试报告
+测试点：
+(venv) PS C:\code\cloud-custodian-franklwy-fork> custodian schema huaweicloud.eg-subscription
+huaweicloud.eg-subscription:
+  actions:
+  - auto-tag-user
+  - mark-for-op
+  - normalize-tag
+  - remove-tag
+  - rename-tag
+  - tag
+  - tag-trim
+  - webhook
+  filters:
+  - event
+  - list-item
+  - marked-for-op
+  - reduce
+  - tag-count
+  - value
+
+1.test filters:tag-count 测试过滤标签等于0的资源
+policies:
+  - name: event-subscription-tags-filter-count
+    resource: huaweicloud.eg-subscription
+    filters:
+      - type: tag-count
+        count: 0
+        op: eq
+
+(venv) PS C:\code\cloud-custodian-franklwy-fork> custodian run --output-dir=. custodian.yml
+2025-05-15 14:46:26,728: custodian.policy:INFO policy:event-subscription-tags-autoadd resource:huaweicloud.eg-subscription region: count:1 time:0.00
+
+1.test filters:value 测试按资源属性过滤
+policies:
+  - name: event-subscription-tags-filter-value
+    resource: huaweicloud.eg-subscription
+    filters:
+      - type: value
+        key: status
+        value: ENABLED
+        op: eq
+
+(venv) PS C:\code\cloud-custodian-franklwy-fork> custodian run --output-dir=. custodian.yml
+2025-05-15 15:53:38,606: custodian.policy:INFO policy:event-subscription-tags-filter-value resource:huaweicloud.eg-subscription region: count:1 time:5.62
+
+1.test filters:value 测试按资源属性过滤
+policies:
+  - name: event-subscription-tags-filter-value
+    resource: huaweicloud.eg-subscription
+    filters:
+      - type: value
+        key: status
+        value: ENABLED
+        op: eq
+
+(venv) PS C:\code\cloud-custodian-franklwy-fork> custodian run --output-dir=. custodian.yml
+2025-05-15 15:53:38,606: custodian.policy:INFO policy:event-subscription-tags-filter-value resource:huaweicloud.eg-subscription region: count:1 time:5.62
