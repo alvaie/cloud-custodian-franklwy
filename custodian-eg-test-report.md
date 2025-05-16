@@ -196,6 +196,51 @@ graph TD
 
 ### 测试点 5: event
 
+#### 测试策略
+```yaml
+policies:
+  - name: auto-tag-creator
+    resource: huaweicloud.eg-subscription
+    mode:
+      type: cloudtrace
+      xrole: eg_custodian_agency
+      enable_lts_log: true
+      events:
+        - source: "EG.subscription"
+          event: "CreateSubscription"
+          ids: "resource_id"
+    actions:
+      - type: auto-tag-user
+        tag: Creator
+        value: userName
+```
+
+#### 执行过程
+```bash
+custodian run -v --cache-period=0 --output-dir=. custodian.yml
+```
+
+#### 测试输出
+```log
+(venv) PS C:\code\cloud-custodian-franklwy-fork> custodian run -v --cache-period=0 --output-dir=. custodian.yml
+2025-05-16 14:57:07,202: custodian.cache:DEBUG Disabling cache
+2025-05-16 14:57:07,202: custodian.commands:DEBUG Loaded file custodian.yml. Contains 1 policies
+2025-05-16 14:57:07,219: custodian.output:DEBUG Storing output with <LogFile file://.\auto-tag-creator\custodian-run.log>
+2025-05-16 14:57:07,219: custodian.policy:INFO Provisioning policy FunctionGraph: auto-tag-creator region: sa-brazil-1
+2025-05-16 14:57:07,391: custodian.serverless:DEBUG Created custodian serverless archive size: 0.79mb
+2025-05-16 14:57:08,425: c7n_huaweicloud.mu:WARNING Can not find function[custodian-auto-tag-creator], will create.
+2025-05-16 14:57:08,426: c7n_huaweicloud.mu:INFO Creating custodian policy FunctionGraph function[custodian-auto-tag-creator]...
+2025-05-16 14:57:09,230: c7n_huaweicloud.mu:INFO Using public dependency ['2e97a96a-1853-4be5-b631-3a5107235af2']
+2025-05-16 14:57:18,966: c7n_huaweicloud.mu:INFO Create CTS trigger for function[urn:fss:sa-brazil-1:0f3e90028580f40e2f65c0061bc5a600:function:default:custodian-auto-tag-creator:latest] success, trigger id: [27734dcd-3468-41de-8b02-00322d1e3830, trigger name: [custodian_timer_20250516145717], trigger status: [ACTIVE].
+2025-05-16 14:57:18,967: c7n_huaweicloud.mu:INFO Created trigger[27734dcd-3468-41de-8b02-00322d1e3830] for function[custodian-auto-tag-creator].
+
+```
+
+#### 结果分析
+✅ **功能验证成功**：
+创建事件驱动成功
+![img_4.png](img_4.png)
+
 ### 测试点 6: marked-for-op
 
 #### 测试策略
@@ -554,3 +599,48 @@ custodian run -v --cache-period=0 --output-dir=. custodian.yml
 |-----------|------------|----------|----------|---------------------|
 | webhook操作 | 1          | 5.69s    | ✅ 通过  | 2025-05-15 22:59:41 |
 
+### 测试点7：自动添加用户标签（auto-tag-user）
+
+#### 测试策略
+
+```yaml
+policies:
+  - name: auto-tag-creator
+    resource: huaweicloud.eg-subscription
+    mode:
+      type: cloudtrace
+      xrole: eg_custodian_agency
+      enable_lts_log: true
+      events:
+        - source: "EG.subscription"
+          event: "CreateSubscription"
+          ids: "resource_id"
+    actions:
+      - type: auto-tag-user
+        tag: Creator
+        value: userName
+
+```
+
+#### 执行命令
+```bash
+custodian run -v --cache-period=0 --output-dir=. custodian.yml
+```
+
+#### 测试结果
+```log
+(venv) PS C:\code\cloud-custodian-franklwy-fork> custodian run -v --cache-period=0 --output-dir=. custodian.yml
+2025-05-16 14:57:07,202: custodian.cache:DEBUG Disabling cache
+2025-05-16 14:57:07,202: custodian.commands:DEBUG Loaded file custodian.yml. Contains 1 policies
+2025-05-16 14:57:07,219: custodian.output:DEBUG Storing output with <LogFile file://.\auto-tag-creator\custodian-run.log>
+2025-05-16 14:57:07,219: custodian.policy:INFO Provisioning policy FunctionGraph: auto-tag-creator region: sa-brazil-1
+2025-05-16 14:57:07,391: custodian.serverless:DEBUG Created custodian serverless archive size: 0.79mb
+2025-05-16 14:57:08,425: c7n_huaweicloud.mu:WARNING Can not find function[custodian-auto-tag-creator], will create.
+2025-05-16 14:57:08,426: c7n_huaweicloud.mu:INFO Creating custodian policy FunctionGraph function[custodian-auto-tag-creator]...
+2025-05-16 14:57:09,230: c7n_huaweicloud.mu:INFO Using public dependency ['2e97a96a-1853-4be5-b631-3a5107235af2']
+2025-05-16 14:57:18,966: c7n_huaweicloud.mu:INFO Create CTS trigger for function[urn:fss:sa-brazil-1:0f3e90028580f40e2f65c0061bc5a600:function:default:custodian-auto-tag-creator:latest] success, trigger id: [27734dcd-3468-41de-8b02-00322d1e3830, trigger name: [custodian_timer_20250516145717], trigger status: [ACTIVE].
+2025-05-16 14:57:18,967: c7n_huaweicloud.mu:INFO Created trigger[27734dcd-3468-41de-8b02-00322d1e3830] for function[custodian-auto-tag-creator].
+```
+
+### 结果验证
+事件驱动，创建函数触发器，在新建EG事件订阅资源时，给指定的标签设置value
