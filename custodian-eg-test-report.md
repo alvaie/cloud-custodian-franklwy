@@ -207,14 +207,21 @@ policies:
       enable_lts_log: true
       events:
         - source: "EG.subscription"
-          event: "CreateSubscription"
+          event: "UpdateSubscription"
           ids: "resource_id"
     actions:
       - type: auto-tag-user
         tag: Creator
         value: userName
 ```
-
+手动添加函数环境变量：
+```json
+{
+    "HUAWEI_DEFAULT_REGION": "sa-brazil-1",
+    "LOG_LEVEL": "WARNING",
+    "HUAWEICLOUD_SDK_REGION_EG_SA_BRAZIL_1": "https://eg.sa-brazil-1.myhuaweicloud.com"
+}
+```
 #### 执行过程
 ```bash
 custodian run -v --cache-period=0 --output-dir=. custodian.yml
@@ -235,6 +242,8 @@ custodian run -v --cache-period=0 --output-dir=. custodian.yml
 2025-05-16 14:57:18,967: c7n_huaweicloud.mu:INFO Created trigger[27734dcd-3468-41de-8b02-00322d1e3830] for function[custodian-auto-tag-creator].
 
 ```
+函数创建成功：
+![img_5.png](img_5.png)
 
 #### 结果分析
 ✅ **功能验证成功**：
@@ -613,7 +622,7 @@ policies:
       enable_lts_log: true
       events:
         - source: "EG.subscription"
-          event: "CreateSubscription"
+          event: "UpdateSubscription"
           ids: "resource_id"
     actions:
       - type: auto-tag-user
@@ -643,4 +652,19 @@ custodian run -v --cache-period=0 --output-dir=. custodian.yml
 ```
 
 ### 结果验证
+测试未覆盖：原因：EG未上IAM5.0，无法获取userinfo
 事件驱动，创建函数触发器，在新建EG事件订阅资源时，给指定的标签设置value
+```log
+2025-05-16T08:01:17.901Z Start load request 'e09728b0-e43f-4573-b136-0a0d3ffbf77d', version: latest
+INFO:FileLogger:load module 'custodian_policy' ok.
+INFO:FileLogger:user define function loaded in 11 sec 0.753161 ms
+INFO:FileLogger:function was loaded successfully: run
+2025-05-16T08:01:29.657Z Finish load request 'e09728b0-e43f-4573-b136-0a0d3ffbf77d', duration: 11756.299ms, memory used: 272.984MB, storage used: 0.081MB.
+2025-05-16T08:01:29.672Z Start invoke request 'f162b870-a61a-4b58-b1d6-8743a1cb9a57', version: latest
+{'cts': {'request': {}, 'trace_id': 'ee296d0a-322b-11f0-887a-27b07489121e', 'code': 200, 'trace_name': 'UpdateSubscription', 'resource_type': 'subscription', 'trace_rating': 'normal', 'source_ip': '119.8.41.206', 'domain_id': 'e5a81532221b408b85d7b656675d888d', 'service_type': 'EG', 'trace_type': 'ConsoleAction', 'project_id': '0f3e90028580f40e2f65c0061bc5a600', 'read_only': False, 'response': {}, 'resource_id': '6ed08329-615f-4447-827e-a4a16c44f758', 'trace_status': 'normal', 'resource_account_id': 'e5a81532221b408b85d7b656675d888d', 'time': 1747382470907, 'resource_name': 'subscription-tkx7', 'record_time': 1747382470907, 'request_id': '15fccd48ea99d4aa7fe14c5b961bec86', 'user': {'domain': {'name': 'hwstaff_intl_a00421997', 'id': 'e5a81532221b408b85d7b656675d888d'}, 'name': 'eg_test', 'id': 'ecac8fb9d2134f5680e274d253201ba2'}}}
+WARNING:custodian.resources.subscription:Failed to retrieve tags for Subscription 6ed08329-615f-4447-827e-a4a16c44f758: TMS.0002 - Bad request.
+WARNING:custodian.resources.subscription:Failed to retrieve tags for Subscription b401e797-e670-43ee-8cf4-04dbf66c6de5: TMS.0002 - Bad request.
+WARNING:custodian.resources.subscription:Failed to retrieve tags for Subscription 63cfd150-65fd-4180-ba32-e9710100d100: TMS.0002 - Bad request.
+WARNING:custodian.actions:user info not found in event
+2025-05-16T08:01:35.748Z Finish invoke request 'f162b870-a61a-4b58-b1d6-8743a1cb9a57', duration: 6075.682ms, billing duration: 6076ms, memory used: 272.594MB, billing memory: 512MB, cpu used: 0.053U, storage used: 0.085MB
+```
