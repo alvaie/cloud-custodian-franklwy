@@ -7,6 +7,26 @@
 
 ---
 
+## schema
+
+huaweicloud.eg-subscription:
+  actions:
+  - auto-tag-user
+  - mark-for-op
+  - normalize-tag
+  - remove-tag
+  - rename-tag
+  - tag
+  - tag-trim
+  - webhook
+  filters:
+  - event
+  - list-item
+  - marked-for-op
+  - reduce
+  - tag-count
+  - value
+
 ## 测试filters
 
 ### 测试点 1: 标签数量过滤（tag-count）
